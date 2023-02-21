@@ -1,3 +1,5 @@
+import React from 'react';
+
 //Type defination for the products
 export interface ProductTypes{
     type: String,
@@ -8,3 +10,6 @@ export interface ProductTypes{
     price: String,
     available: Number
 }
+
+export type InputEvent = React.ChangeEvent<HTMLInputElement>;
+export type InputSelectEvent =  React.ChangeEvent<HTMLSelectElement>
