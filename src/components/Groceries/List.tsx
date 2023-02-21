@@ -1,5 +1,8 @@
 import React,{useEffect, useState} from 'react';
 
+//COMPONENT
+import Header from '../common/header';
+
 //API
 import fetchProducts from '../../utils/utils';
 
@@ -44,11 +47,11 @@ const List = () => {
 
     return (
         <div>
-          <div>
+          {/* <div>
             <label>Search product:</label>
             <input type="search" name="product" onChange={(event: InputEvent) => setSearchQuery(event.target.value)}/>
-          </div>
-          <div>
+          </div> */}
+          {/* <div>
             <label>Filter product:</label>
             <select name="product" id="grocery" onChange={(event: InputSelectEvent) => setProductType(event.target.value)}>
               <option value="allItems">All items</option>
@@ -56,8 +59,8 @@ const List = () => {
               <option value="fruit">Fruits</option>
               <option value="bakery">Bakery</option>
             </select>
-          </div>
-          <table>
+          </div> */}
+          {/* <table>
             <tr>
               <th>Name</th>
               <th>Description</th>
@@ -74,8 +77,50 @@ const List = () => {
                 )
               })
             }
-          </table>
-        </div>
+          </table> */}
+          <Header 
+            //@ts-ignore
+            onInputChange={(event: InputEvent) => setSearchQuery(event.target.value)}
+            onSelectChange={(event: InputSelectEvent, key:String) => setProductType(key)}
+          />
+          <div className="container">
+          <div className="w-100">
+            <h1 className="titlepage">Trending Items</h1>
+            <div className="product-box">
+              <div className="row">
+                {
+                  products.map((item, index) => {
+                    return(
+                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-4 col-12">
+                        <div className="product">
+                          <div className="product-img">
+                            {/*@ts-ignore*/}
+                            <img src={item?.img} />
+                          </div>
+                          <div className="product-bottom">
+                            <h3>{item?.name}</h3>
+                            <p>{item?.description}</p>
+                            <div className="prize-box">
+                              <span className="label-tags">Only 5 left</span>
+                              <span className="d-flex w-100">
+                                <span className="prize-number">{item?.price}</span> 
+                                <span className="d-flex gap-3 align-items-center ms-auto">
+                                  <img className="w-20" src="images/cart-product.svg" />
+                                  <img className="w-20" src="images/cart-love.svg" />
+                                </span>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )
+                  })
+                }
+              </div>
+            </div>
+          </div>
+        </div>   
+      </div>
     );
 };
 
