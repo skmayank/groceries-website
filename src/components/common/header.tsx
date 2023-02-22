@@ -1,7 +1,23 @@
-import React from 'react'
+import React from 'react';
+
+import { useNavigate } from "react-router-dom";
+
+//CONSTANTS
+import {filterOption} from '../../utils/constants'
+
+//UTILS
+import {getCartDataFromLocalStorage} from '../../utils/utils';
 
 //@ts-ignore
-const Header = ({onInputChange, onSelectChange}) => {
+const Header = ({onInputChange, onSelectChange, showFilter}) => {
+
+    const navigate = useNavigate();
+
+    const handleRedirection = () => {
+        navigate('/checkout');
+    }
+    //@ts-ignore
+    const localStorageCartData = getCartDataFromLocalStorage("cartData") ? JSON.parse(getCartDataFromLocalStorage("cartData")) : [];
     return (
         <div className="container">
             <header className="header header-margin">
@@ -19,26 +35,29 @@ const Header = ({onInputChange, onSelectChange}) => {
                   <div className="useraccount"> 
                     <div className="top-head-icon"><a href="#"><span className="number">8</span><img className="w-35" src="images/heart.svg" /></a></div>
                     <a href="#"><img className="w-35" src="images/avatar-top.svg" /></a> 
-                    <div className="top-head-icon"><a href="#"><span className="number-blue">8</span><img className="w-35" src="images/cart.svg" /></a></div>
+                    <div className="top-head-icon" onClick={handleRedirection}><span className="number-blue">{localStorageCartData.length}</span><img className="w-35" src="images/cart.svg" /></div>
                   </div>
                 </div>
               </div>
-              <div className="row">
-                <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                  <div className="tags">
-                    <div className="filter-box">
-                      <div className="filter-left">
-                        <ul>
-                          <li onClick={(event)=>onSelectChange(event, "allItems")}><a href="#" className="active">All items</a></li>
-                          <li onClick={(event)=>onSelectChange(event, "drinks")}><a href="#">Drinks</a></li>
-                          <li onClick={(event)=>onSelectChange(event, "fruit")}><a href="#">Fruit</a></li>
-                          <li onClick={(event)=>onSelectChange(event, "bakery")}><a href="#">Bakery</a></li>
-                        </ul>
+              {showFilter && 
+                <div className="row">
+                  <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div className="tags">
+                      <div className="filter-box">
+                        <div className="filter-left">
+                          <ul>
+                              {filterOption.map((item, index) => {
+                                  return(
+                                      <li key={index} onClick={(event)=>onSelectChange(event, item.key)}><a className="active">{item.name}</a></li>
+                                  )
+                              })}
+                          </ul>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              }
             </header>
         </div>
     )
