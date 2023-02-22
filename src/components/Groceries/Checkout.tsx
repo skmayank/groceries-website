@@ -90,6 +90,7 @@ const Checkout = () => {
     setProducts(filteredProducts);
   }, [searchQuery]);
 
+  //@ts-ignore
   return (
     <div data-testid="groceries-checkout-id">
       <div className="container">
@@ -175,9 +176,9 @@ const Checkout = () => {
                       <td>Total</td>
                       <td>£{getTotalAmount(products).total}</td>
                       <td>
-                        <a href="#" className="checkout-btn">
+                        <div className="checkout-btn">
                           Checkout
-                        </a>
+                        </div>
                       </td>
                     </tr>
                   </tbody>

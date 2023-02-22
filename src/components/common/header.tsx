@@ -47,14 +47,14 @@ const Header = ({ onInputChange, onSelectChange, showFilter, productType="allIte
           <div className="col-xl-3 col-lg-3 col-md-3 col-sm-3 ml-auto text-end col-12">
             <div className="useraccount">
               <div className="top-head-icon">
-                <a>
+                <div>
                   <span className="number">{localStorageLikedData.length}</span>
                   <img alt="" className="w-35" src="images/heart.svg" />
-                </a>
+                </div>
               </div>
-              <a>
+              <div>
                 <img alt="" className="w-35" src="images/avatar-top.svg" />
-              </a>
+              </div>
               <div className="top-head-icon" onClick={handleRedirection}>
                 <span className="number-blue">
                   {localStorageCartData.length}
@@ -77,7 +77,7 @@ const Header = ({ onInputChange, onSelectChange, showFilter, productType="allIte
                             key={index}
                             onClick={(event) => onSelectChange(event, item.key)}
                           >
-                            <a className={productType === item.key ? "active" : ''}>{item.name}</a>
+                            <div className={productType === item.key ? "active" : ''}>{item.name}</div>
                           </li>
                         );
                       })}
