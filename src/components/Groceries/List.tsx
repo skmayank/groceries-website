@@ -98,7 +98,7 @@ const List = () => {
     const existedLikedCart = localStorageCartLikedData.map((a:any) => a.name);
 
     return (
-        <>
+        <div data-testid="groceries-list-id">
           <Header 
             //@ts-ignore
             onInputChange={(event: InputEvent) => setSearchQuery(event.target.value)}
@@ -118,7 +118,7 @@ const List = () => {
                         <div className="product">
                           <div className="product-img">
                             {/*@ts-ignore*/}
-                            <img src={item?.img} />
+                            <img src={item?.img} alt=""/>
                           </div>
                           <div className="product-bottom">
                             <h3>{item?.name}</h3>
@@ -128,8 +128,8 @@ const List = () => {
                               <span className="d-flex w-100">
                                 <span className="prize-number">{item?.price}</span> 
                                 <span className="d-flex gap-3 align-items-center ms-auto">
-                                  <img className="w-20" src="images/cart-product.svg" onClick={()=>handleAddCard(item)}/>
-                                  <img className="w-20" src={!isLiked ?  "images/cart-love.svg" : "images/heart.svg"} onClick={() => handleLikedCard(item)}/>
+                                  <img alt="" className="w-20" src="images/cart-product.svg" onClick={()=>handleAddCard(item)}/>
+                                  <img alt="" className="w-20" src={!isLiked ?  "images/cart-love.svg" : "images/heart.svg"} onClick={() => handleLikedCard(item)}/>
                                 </span>
                               </span>
                             </div>
@@ -150,7 +150,7 @@ const List = () => {
             </div>
           </div>
         </div>   
-      </>
+      </div>
     );
 };
 

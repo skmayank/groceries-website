@@ -7,11 +7,11 @@ import Header from "../common/header";
 import {
   getCartDataFromLocalStorage,
   setCartDataToLocalStorage,
-  getTotalAmount
+  getTotalAmount,
 } from "../../utils/utils";
 
 //Types
-import { ProductTypes, InputEvent, InputSelectEvent } from "./List.types";
+import { ProductTypes, InputEvent } from "./List.types";
 
 const Checkout = () => {
   const [products, setProducts] = useState<ProductTypes[]>([]);
@@ -65,16 +65,17 @@ const Checkout = () => {
   //FILTER DATA BY SELECT AND SEARCH
   React.useMemo(() => {
     let filteredProducts = defaultProducts || [];
-    if (searchQuery !== '' && searchQuery) {
+    if (searchQuery !== "" && searchQuery) {
       filteredProducts = filteredProducts.filter((item) => {
-        if (item?.name.toLowerCase()?.includes(searchQuery?.toLowerCase())) return item;
+        if (item?.name.toLowerCase()?.includes(searchQuery?.toLowerCase()))
+          return item;
       });
     }
     setProducts(filteredProducts);
-  },[searchQuery]);
+  }, [searchQuery]);
 
   return (
-    <>
+    <div data-testid="groceries-checkout-id">
       <div className="container">
         {/*@ts-ignore*/}
         <Header
@@ -90,14 +91,13 @@ const Checkout = () => {
           <div className="cart-head">
             <h1 className="titlepage">Checkout</h1>
             <div className="table-box-product-cart">
-              {products &&
-                products.map((item: any, index: number) => {
+              {products.map((item: any, index: number) => {
                   const itemLeft = item.available - (item.totalItemAdded || 1);
                   return (
                     <div className="cart-list">
                       <div className="cart-img">
                         <div className="img-cart">
-                          <img src="images/image-2.jpg" />
+                          <img src="images/image-2.jpg" alt=""/>
                         </div>
                         <div className="cart-text">
                           <h3>{item?.name}</h3>
@@ -109,6 +109,7 @@ const Checkout = () => {
                           <img
                             src="images/minus.svg"
                             onClick={() => handleRemoveItem(item)}
+                            alt=""
                           />
                           <span>{item?.totalItemAdded || 1}</span>
                           <img
@@ -116,52 +117,60 @@ const Checkout = () => {
                             onClick={() =>
                               itemLeft !== 0 && handleAddItem(item)
                             }
+                            alt=""
                           />
                         </div>
                         {itemLeft !== 0 && (
-                          <span className={`label-tags ${itemLeft >= 10  && 'available'}`}>{itemLeft < 10 ? `${itemLeft} left` : 'Availale'}</span>
+                          <span
+                            className={`label-tags ${
+                              itemLeft >= 10 && "available"
+                            }`}
+                          >
+                            {itemLeft < 10 ? `${itemLeft} left` : "Availale"}
+                          </span>
                         )}
                       </div>
 
                       <div className="prize-cart">{item.price}</div>
 
                       <div className="close-cart">
-                        <img src="images/close.svg" />
+                        <img src="images/close.svg" alt=""/>
                       </div>
                     </div>
                   );
                 })}
             </div>
-
-            <div className="table-box-cart">
-              <table className="table">
-                <tbody>
-                  <tr>
-                    <td>Subtotal</td>
-                    <td>£{getTotalAmount(products).subTotal}</td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>Discount</td>
-                    <td>£{getTotalAmount(products).discount}</td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>Total</td>
-                    <td>£{getTotalAmount(products).total}</td>
-                    <td>
-                      <a href="#" className="checkout-btn">
-                        Checkout
-                      </a>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+            {products.length ? (
+              <div className="table-box-cart">
+                <table className="table">
+                  <tbody>
+                    <tr>
+                      <td>Subtotal</td>
+                      <td>£{getTotalAmount(products).subTotal}</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>Discount</td>
+                      <td>£{getTotalAmount(products).discount}</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>Total</td>
+                      <td>£{getTotalAmount(products).total}</td>
+                      <td>
+                        <a href="#" className="checkout-btn">
+                          Checkout
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            ):''}
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
