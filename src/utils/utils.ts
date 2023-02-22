@@ -29,7 +29,6 @@ export const getTotalAmount = (data:any) => {
     data.map((item:any) => {
         // eslint-disable-next-line
         let price = item.price.replace(/[^\x00-\x7F]/g, "");
-        console.log(price, item.totalItemAdded)
         const totalItem = item.totalItemAdded || 1;
         //OFFER IF BUY 6 COCA CAN THEN ONE CAN PRICE WILL BE MINUS
         subTotal = subTotal + parseFloat(price) * totalItem;

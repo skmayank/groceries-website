@@ -28,39 +28,43 @@ const Checkout = () => {
     setDefaultProducts(localStorageCartData);
   }, []);
 
-  const handleAddItem = (item: any) => {
+  //SET THE FORMATTED DATA TO LOCALSTORAGE
+  const resetFormattedStatesData = (data:any , key:any)  => {
+    setProducts(data)
+    setCartDataToLocalStorage(data, key)
+  }
+
+  const AddOrRemoveQuantity=(item:any, flag:boolean) => {
     //@ts-ignore
     const newLocalStorageValue = [];
     products.map((obj: any) => {
       if (obj.name === item.name) {
-        obj.totalItemAdded = obj.totalItemAdded
+        if(flag === true) {
+          obj.totalItemAdded = obj.totalItemAdded
           ? obj.totalItemAdded + 1
-          : 1 + 1;
+          : 1 + 1 ;
+        }
+        if(flag === false) {
+          obj.totalItemAdded = obj.totalItemAdded
+          ? obj.totalItemAdded - 1
+          : 1 - 1;
+        }
       }
       newLocalStorageValue.push(obj);
     });
     //@ts-ignore
-    setProducts(newLocalStorageValue);
-    //@ts-ignore
-    setCartDataToLocalStorage(newLocalStorageValue, "cartData");
+    return newLocalStorageValue;
+  }
+
+  const handleAddItem = (item: any) => {
+    const res = AddOrRemoveQuantity(item, true)
+    resetFormattedStatesData(res, "cartData")
   };
 
   //HANDLE FUNCTION TO REMOVE QUANTITY FROM CART
   const handleRemoveItem = (item: any) => {
-    //@ts-ignore
-    const newLocalStorageValue = [];
-    products.map((obj: any) => {
-      if (obj.name === item.name) {
-        obj.totalItemAdded = obj.totalItemAdded
-          ? obj.totalItemAdded - 1
-          : 1 - 1;
-      }
-      newLocalStorageValue.push(obj);
-    });
-    //@ts-ignore
-    setProducts(newLocalStorageValue);
-    //@ts-ignore
-    setCartDataToLocalStorage(newLocalStorageValue, "cartData");
+    const res = AddOrRemoveQuantity(item, false)
+    resetFormattedStatesData(res, "cartData")
   };
 
   //HANDLE FUNCTION TO REMOVE FROM CART
@@ -73,9 +77,7 @@ const Checkout = () => {
       (obj: any) => obj.name !== item.name
     );
     //@ts-ignore
-    setProducts(existedToLocalStorage);
-    //@ts-ignore
-    setCartDataToLocalStorage(existedToLocalStorage, "cartData");
+    resetFormattedStatesData(existedToLocalStorage, "cartData")
   };
 
   //FILTER DATA BY SELECT AND SEARCH
