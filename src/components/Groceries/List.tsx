@@ -130,7 +130,7 @@ const List = () => {
       />
       <div className="container">
         <div className="w-100">
-          <h1 className="titlepage">Trending Items</h1>
+          <h1 className="titlepage text-start">Trending Items</h1>
           <div className="product-box">
             <div className="row">
               {products.map((item, index) => {
@@ -187,7 +187,7 @@ const List = () => {
               })}
             </div>
             {showCartAlert && (
-              <div className="alert alert-success" role="alert">
+              <div className="alert alert-success message" role="alert">
                 {alertMessage}
               </div>
             )}

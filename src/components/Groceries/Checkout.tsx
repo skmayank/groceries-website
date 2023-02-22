@@ -104,7 +104,7 @@ const Checkout = () => {
       <div className="container">
         <div className="w-100">
           <div className="cart-head">
-            <h1 className="titlepage">Checkout</h1>
+            <h1 className="titlepage text-start">Checkout</h1>
             <div className="table-box-product-cart">
               {products.map((item: any, index: number) => {
                 const itemLeft = item.available - (item.totalItemAdded || 1);
@@ -112,7 +112,7 @@ const Checkout = () => {
                   <div className="cart-list">
                     <div className="cart-img">
                       <div className="img-cart">
-                        <img src="images/image-2.jpg" alt="" />
+                        <img src={item?.img} alt="" />
                       </div>
                       <div className="cart-text">
                         <h3>{item?.name}</h3>

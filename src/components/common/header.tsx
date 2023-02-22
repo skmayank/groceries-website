@@ -27,7 +27,7 @@ const Header = ({ onInputChange, onSelectChange, showFilter, productType="allIte
     <div className="container" data-testid="groceries-header-id">
       <header className="header header-margin">
         <div className="row align-items-center">
-          <div className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
+          <div className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12 text-start">
             <h4>GROCERIES</h4>
           </div>
           <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 text-center">
