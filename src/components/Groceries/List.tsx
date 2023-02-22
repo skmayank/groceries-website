@@ -69,6 +69,34 @@ const List = () => {
       }
     }
 
+    //HANDLE FUNCTION TO LIKE CART
+    const handleLikedCard = (item: any) => {
+      setShowCartAlert(true)
+      //@ts-ignore
+      const localStorageCartLikedData = getCartDataFromLocalStorage("cartLikedData") ? JSON.parse(getCartDataFromLocalStorage("cartLikedData")) : [];
+      let notExistedToLocalStorage = localStorageCartLikedData.filter((obj:any) => obj.name === item.name);
+      if(!notExistedToLocalStorage.length)  {
+        const localData = [item, ...localStorageCartLikedData];
+        setCartDataToLocalStorage(localData, 'cartLikedData');
+        setShowAlertMessage('Status Updated')
+        setTimeout(function(){
+          setShowCartAlert(false);
+        }, 3000);
+      }else {
+        let existedToLocalStorage = localStorageCartLikedData.filter((obj:any) => obj.name !== item.name);
+        setCartDataToLocalStorage(existedToLocalStorage, 'cartLikedData');
+        setShowAlertMessage('Status Updated')
+        setTimeout(function(){
+          setShowCartAlert(false);
+        }, 3000);
+      }
+    }
+
+    //@ts-ignore
+    const localStorageCartLikedData = getCartDataFromLocalStorage("cartLikedData") ? JSON.parse(getCartDataFromLocalStorage("cartLikedData")) : [];
+
+    const existedLikedCart = localStorageCartLikedData.map((a:any) => a.name);
+
     return (
         <>
           <Header 
@@ -84,6 +112,7 @@ const List = () => {
               <div className="row">
                 {
                   products.map((item, index) => {
+                    const isLiked = existedLikedCart.includes(item?.name);
                     return(
                       <div className="col-xl-6 col-lg-6 col-md-6 col-sm-4 col-12" key={index}>
                         <div className="product">
@@ -95,12 +124,12 @@ const List = () => {
                             <h3>{item?.name}</h3>
                             <p>{item?.description}</p>
                             <div className="prize-box">
-                              <span className="label-tags">{`Only ${item?.available} left`}</span>
+                              <span className={`label-tags ${item?.available >= 10  && 'available'}`}>{item?.available < 10 ? `Only ${item?.available} left` : 'Available'}</span>
                               <span className="d-flex w-100">
                                 <span className="prize-number">{item?.price}</span> 
                                 <span className="d-flex gap-3 align-items-center ms-auto">
                                   <img className="w-20" src="images/cart-product.svg" onClick={()=>handleAddCard(item)}/>
-                                  <img className="w-20" src="images/cart-love.svg" />
+                                  <img className="w-20" src={!isLiked ?  "images/cart-love.svg" : "images/heart.svg"} onClick={() => handleLikedCard(item)}/>
                                 </span>
                               </span>
                             </div>

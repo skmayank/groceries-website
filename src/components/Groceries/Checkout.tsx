@@ -15,6 +15,7 @@ import { ProductTypes, InputEvent, InputSelectEvent } from "./List.types";
 
 const Checkout = () => {
   const [products, setProducts] = useState<ProductTypes[]>([]);
+  const [defaultProducts, setDefaultProducts] = useState<ProductTypes[]>([]);
   const [searchQuery, setSearchQuery] = useState<String>("");
 
   useEffect(() => {
@@ -24,6 +25,7 @@ const Checkout = () => {
         JSON.parse(getCartDataFromLocalStorage("cartData"))
       : [];
     setProducts(localStorageCartData);
+    setDefaultProducts(localStorageCartData);
   }, []);
 
   const handleAddItem = (item: any) => {
@@ -59,6 +61,17 @@ const Checkout = () => {
     //@ts-ignore
     setCartDataToLocalStorage(newLocalStorageValue, "cartData");
   };
+
+  //FILTER DATA BY SELECT AND SEARCH
+  React.useMemo(() => {
+    let filteredProducts = defaultProducts || [];
+    if (searchQuery !== '' && searchQuery) {
+      filteredProducts = filteredProducts.filter((item) => {
+        if (item?.name.toLowerCase()?.includes(searchQuery?.toLowerCase())) return item;
+      });
+    }
+    setProducts(filteredProducts);
+  },[searchQuery]);
 
   return (
     <>
@@ -106,7 +119,7 @@ const Checkout = () => {
                           />
                         </div>
                         {itemLeft !== 0 && (
-                          <span className="label-tags">{`${itemLeft} left`}</span>
+                          <span className={`label-tags ${itemLeft >= 10  && 'available'}`}>{itemLeft < 10 ? `${itemLeft} left` : 'Availale'}</span>
                         )}
                       </div>
 

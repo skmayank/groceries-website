@@ -18,6 +18,8 @@ const Header = ({onInputChange, onSelectChange, showFilter}) => {
     }
     //@ts-ignore
     const localStorageCartData = getCartDataFromLocalStorage("cartData") ? JSON.parse(getCartDataFromLocalStorage("cartData")) : [];
+    //@ts-ignore
+    const localStorageLikedData =  getCartDataFromLocalStorage("cartLikedData") ? JSON.parse(getCartDataFromLocalStorage("cartLikedData")) : [];
     return (
         <div className="container">
             <header className="header header-margin">
@@ -33,7 +35,7 @@ const Header = ({onInputChange, onSelectChange, showFilter}) => {
                 </div>
                 <div className="col-xl-3 col-lg-3 col-md-3 col-sm-3 ml-auto text-end col-12">
                   <div className="useraccount"> 
-                    <div className="top-head-icon"><a href="#"><span className="number">8</span><img className="w-35" src="images/heart.svg" /></a></div>
+                    <div className="top-head-icon"><a href="#"><span className="number">{localStorageLikedData.length}</span><img className="w-35" src="images/heart.svg" /></a></div>
                     <a href="#"><img className="w-35" src="images/avatar-top.svg" /></a> 
                     <div className="top-head-icon" onClick={handleRedirection}><span className="number-blue">{localStorageCartData.length}</span><img className="w-35" src="images/cart.svg" /></div>
                   </div>
