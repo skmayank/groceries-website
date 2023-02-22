@@ -45,6 +45,7 @@ const Checkout = () => {
     setCartDataToLocalStorage(newLocalStorageValue, "cartData");
   };
 
+  //HANDLE FUNCTION TO REMOVE QUANTITY FROM CART
   const handleRemoveItem = (item: any) => {
     //@ts-ignore
     const newLocalStorageValue = [];
@@ -60,6 +61,21 @@ const Checkout = () => {
     setProducts(newLocalStorageValue);
     //@ts-ignore
     setCartDataToLocalStorage(newLocalStorageValue, "cartData");
+  };
+
+  //HANDLE FUNCTION TO REMOVE FROM CART
+  const handleRemoveFromCart = (item: any) => {
+    let localStorageCartData = getCartDataFromLocalStorage("cartData")
+      ? //@ts-ignore
+        JSON.parse(getCartDataFromLocalStorage("cartData"))
+      : [];
+    let existedToLocalStorage = localStorageCartData.filter(
+      (obj: any) => obj.name !== item.name
+    );
+    //@ts-ignore
+    setProducts(existedToLocalStorage);
+    //@ts-ignore
+    setCartDataToLocalStorage(existedToLocalStorage, "cartData");
   };
 
   //FILTER DATA BY SELECT AND SEARCH
@@ -92,53 +108,54 @@ const Checkout = () => {
             <h1 className="titlepage">Checkout</h1>
             <div className="table-box-product-cart">
               {products.map((item: any, index: number) => {
-                  const itemLeft = item.available - (item.totalItemAdded || 1);
-                  return (
-                    <div className="cart-list">
-                      <div className="cart-img">
-                        <div className="img-cart">
-                          <img src="images/image-2.jpg" alt=""/>
-                        </div>
-                        <div className="cart-text">
-                          <h3>{item?.name}</h3>
-                          <p>{item?.description}</p>
-                        </div>
+                const itemLeft = item.available - (item.totalItemAdded || 1);
+                return (
+                  <div className="cart-list">
+                    <div className="cart-img">
+                      <div className="img-cart">
+                        <img src="images/image-2.jpg" alt="" />
                       </div>
-                      <div className="box-plus">
-                        <div className="cart-number">
-                          <img
-                            src="images/minus.svg"
-                            onClick={() => handleRemoveItem(item)}
-                            alt=""
-                          />
-                          <span>{item?.totalItemAdded || 1}</span>
-                          <img
-                            src="images/plus.svg"
-                            onClick={() =>
-                              itemLeft !== 0 && handleAddItem(item)
-                            }
-                            alt=""
-                          />
-                        </div>
-                        {itemLeft !== 0 && (
-                          <span
-                            className={`label-tags ${
-                              itemLeft >= 10 && "available"
-                            }`}
-                          >
-                            {itemLeft < 10 ? `${itemLeft} left` : "Availale"}
-                          </span>
-                        )}
-                      </div>
-
-                      <div className="prize-cart">{item.price}</div>
-
-                      <div className="close-cart">
-                        <img src="images/close.svg" alt=""/>
+                      <div className="cart-text">
+                        <h3>{item?.name}</h3>
+                        <p>{item?.description}</p>
                       </div>
                     </div>
-                  );
-                })}
+                    <div className="box-plus">
+                      <div className="cart-number">
+                        <img
+                          src="images/minus.svg"
+                          onClick={() => handleRemoveItem(item)}
+                          alt=""
+                        />
+                        <span>{item?.totalItemAdded || 1}</span>
+                        <img
+                          src="images/plus.svg"
+                          onClick={() => itemLeft !== 0 && handleAddItem(item)}
+                          alt=""
+                        />
+                      </div>
+                      {itemLeft !== 0 && (
+                        <span
+                          className={`label-tags ${
+                            itemLeft >= 10 && "available"
+                          }`}
+                        >
+                          {itemLeft < 10 ? `${itemLeft} left` : "Availale"}
+                        </span>
+                      )}
+                    </div>
+
+                    <div className="prize-cart">{item.price}</div>
+
+                    <div
+                      className="close-cart"
+                      onClick={() => handleRemoveFromCart(item)}
+                    >
+                      <img src="images/close.svg" alt="" />
+                    </div>
+                  </div>
+                );
+              })}
             </div>
             {products.length ? (
               <div className="table-box-cart">
@@ -166,7 +183,9 @@ const Checkout = () => {
                   </tbody>
                 </table>
               </div>
-            ):''}
+            ) : (
+              ""
+            )}
           </div>
         </div>
       </div>
