@@ -8,6 +8,7 @@ import {
   getCartDataFromLocalStorage,
   setCartDataToLocalStorage,
   getTotalAmount,
+  searchAndFilterData
 } from "../../utils/utils";
 
 //Types
@@ -83,12 +84,7 @@ const Checkout = () => {
   //FILTER DATA BY SELECT AND SEARCH
   React.useMemo(() => {
     let filteredProducts = defaultProducts || [];
-    if (searchQuery !== "" && searchQuery) {
-      filteredProducts = filteredProducts.filter((item) => {
-        if (item?.name.toLowerCase()?.includes(searchQuery?.toLowerCase()))
-          return item;
-      });
-    }
+    filteredProducts = searchAndFilterData(filteredProducts, searchQuery, "")
     setProducts(filteredProducts);
   }, [searchQuery]);
 

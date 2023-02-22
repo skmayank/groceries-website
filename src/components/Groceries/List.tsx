@@ -7,6 +7,7 @@ import Header from "../common/header";
 import fetchProducts, {
   setCartDataToLocalStorage,
   getCartDataFromLocalStorage,
+  searchAndFilterData
 } from "../../utils/utils";
 
 //Types
@@ -38,18 +39,8 @@ const List = () => {
   //FILTER DATA BY SELECT AND SEARCH
   React.useMemo(() => {
     let filteredProducts = defaultProducts || [];
-    if (searchQuery !== "" && searchQuery) {
-      filteredProducts = filteredProducts.filter((item) => {
-        if (item?.name.toLowerCase()?.includes(searchQuery?.toLowerCase()))
-          return item;
-      });
-    }
-    if (productType !== "" && productType !== "allItems" && productType) {
-      filteredProducts = filteredProducts.filter((item) => {
-        if (item?.type?.toLowerCase().includes(productType.toLowerCase()))
-          return item;
-      });
-    }
+    //@ts-ignore
+    filteredProducts = searchAndFilterData(filteredProducts, searchQuery, productType)
     setProducts(filteredProducts);
   }, [searchQuery, productType]);
 

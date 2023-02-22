@@ -48,4 +48,21 @@ export const getTotalAmount = (data:any) => {
     return {total, discount, subTotal};
 }
 
+export const searchAndFilterData = (data:any, searchQuery:any, productType:any) => {
+    let filteredProducts = data;
+    if (searchQuery !== "" && searchQuery) {
+      filteredProducts = filteredProducts.filter((item:any) => {
+        if (item?.name.toLowerCase()?.includes(searchQuery?.toLowerCase()))
+          return item;
+      });
+    }
+    if (productType !== "" && productType !== "allItems" && productType) {
+      filteredProducts = filteredProducts.filter((item:any) => {
+        if (item?.type?.toLowerCase().includes(productType.toLowerCase()))
+          return item;
+      });
+    }
+    return filteredProducts;
+}
+
 export default fetchProducts;
