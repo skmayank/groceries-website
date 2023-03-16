@@ -5,7 +5,7 @@ It shows the list of all grocery product
 
 User can add product to cart and can like the product.
 
-User can view the cart added product on clicking cart icon where you can see count and liked pruduct count also.
+User can view the product which are added to cart on clicking cart icon where you can see count and liked pruduct count also.
 
 User is able to apply the following offers:
 
