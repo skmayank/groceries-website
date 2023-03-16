@@ -428,6 +428,10 @@ body {
     right: 51px;
     min-width: 300px;
 }
+.product--list {
+    cursor: pointer;
+    text-decoration: underline;
+ }
 @media (max-width: 992px) {
   .filter-box{
     flex-wrap: wrap;

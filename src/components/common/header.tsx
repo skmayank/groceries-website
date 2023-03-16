@@ -28,7 +28,8 @@ const Header = ({ onInputChange, onSelectChange, showFilter, productType="allIte
       <header className="header header-margin">
         <div className="row align-items-center">
           <div className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12 text-start">
-            <h4>GROCERIES</h4>
+              <h4>GROCERIES</h4>
+              {window.location.pathname === '/checkout' ? <h5 className = "product--list" onClick={()=>navigate('/')}>Go to products</h5> : ''}
           </div>
           <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 text-center">
             <div className="serach-header">

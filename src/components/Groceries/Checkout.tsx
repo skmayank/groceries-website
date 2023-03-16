@@ -162,17 +162,17 @@ const Checkout = () => {
                   <tbody>
                     <tr>
                       <td>Subtotal</td>
-                      <td>£{getTotalAmount(products).subTotal}</td>
+                      <td>£{(getTotalAmount(products).subTotal).toFixed(2)}</td>
                       <td></td>
                     </tr>
                     <tr>
                       <td>Discount</td>
-                      <td>£{getTotalAmount(products).discount}</td>
+                      <td>£{(getTotalAmount(products).discount).toFixed(2)}</td>
                       <td></td>
                     </tr>
                     <tr>
                       <td>Total</td>
-                      <td>£{getTotalAmount(products).total}</td>
+                      <td>£{(getTotalAmount(products).total).toFixed(2)}</td>
                       <td>
                         <div className="checkout-btn">
                           Checkout
